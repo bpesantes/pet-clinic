@@ -55,15 +55,15 @@ pipeline {
         }
 
         stage('Deploy Test'){
-    when {
-        branch 'master'
-    }
-    agent any
-    steps {
-        sh "chmod +x deploy.sh"
-        sh "./deploy.sh test $TAG_NAME"
-    }
-}
+            when {
+                branch 'master'
+                }
+            agent any
+            steps {
+                sh "chmod +x deploy.sh"
+                sh "./deploy.sh test $TAG_NAME"
+                }
+        }
 
         stage("End to End Tests") {
             when {
@@ -123,7 +123,6 @@ pipeline {
                 sh "./deploy.sh prod $PRODUCTION_LATEST"
                     }
         }
-
-        
+       
     }
 }
