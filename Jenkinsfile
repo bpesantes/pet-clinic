@@ -123,6 +123,20 @@ pipeline {
                 sh "./deploy.sh prod $PRODUCTION_LATEST"
                     }
         }
+        
+        stage('Tag Production Package'){
+            when {
+                expression { env.PRODUCTION_OK == 'true'}
+                }
+            agent any
+            steps{
+                sh 'docker tag $PRODUCTION_LATEST $PRODUCTION_PREVIOUSLY'
+                sh 'docker tag $TAG_NAME $PRODUCTION_LATEST'
+                sh 'docker push $PRODUCTION_PREVIOUSLY'
+                sh 'docker push $PRODUCTION_LATEST'
+                }
+        }
+
        
     }
 }
